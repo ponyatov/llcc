@@ -18,7 +18,7 @@ CFLAGS += -mcpu=cortex-m0
 
 CFLAGS += -mthumb -mfloat-abi=soft
 
-CFLAGS += -I../include -D$(MCU)
+CFLAGS += -I../include -D$(MCU) -DVECT_TAB_SRAM
 
 # force debug
 CFLAGS += -g2

@@ -1,40 +1,31 @@
-PREFIX = $(CURDIR)/installed
+CWD = $(CURDIR)
 
-CBE  = $(PREFIX)/bin/llvm-cbe
+MCU = lm3s811evb
 
-CC  = clang-3.9
+include mk.mk
 
-ARMFLAGS = -target arm-none-eabi -mcpu=cortex-m0 -mthumb -mfloat-abi=soft -g2
-#-mcpu=arm7tdmi
-#-mcpu=cortex-m0+ -mthumb
+PREFIX	= $(CWD)/installed
 
-# force compact sections LTO
-ARMFLAGS += -ffunction-sections -Wl,-gc-sections
-
-#CFLAGS += -Os
-#CFLAGS += -Ofast
-CFLAGS += -O1
-
-CXX = clang++-3.9
+CBE		= $(PREFIX)/bin/llvm-cbe
 
 CXXFLAGS += -std=gnu++11
-CXXFLAGS += $(CFLAGS)
 
-OBJ = lib/startup_RAM.o demo.c
-demo.elf: $(OBJ) Makefile ld/QEMU_CortexM3_RAM.ld
+ARMFLAGS += -DVECT_TAB_SRAM
+
+OBJ = lib/startup$(RAM).o demo.c
+demo.elf: $(OBJ) Makefile ld/$(MCU)$(RAM).ld
 #	arm-none-eabi-gcc 
-	$(CC) $(ARMFLAGS) -Wl,-T,ld/QEMU_CortexM3_RAM.ld -o $@ \
+	$(CC) $(ARMFLAGS) -o $@ \
 		$(OBJ) -Llib -lSTM32_RAM &&\
-	arm-none-eabi-objdump -x $@ > $@.objdump
-	
+	$(OBJDUMP) -x $@ > $@.objdump
 	
 .PHONY: gdb
 gdb: demo.elf
-	ddd --debugger "arm-none-eabi-gdb -x ram.gdb $<"
+	$(DDD) $<
 
 .PHONY: emu
 emu: demo.elf
-	qemu-system-arm -M lm3s811evb -cpu cortex-m3 -S -gdb tcp::4242  -kernel $<
+	$(QEMU) $<
  
 sample: source cortex.bc
 source: source.cpp Makefile

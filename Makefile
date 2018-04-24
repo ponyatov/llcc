@@ -1,3 +1,22 @@
+CC  = clang-3.9
+
+ARMFLAGS = -target arm-none-eabi -mcpu=cortex-m0 -mthumb 
+#-mcpu=arm7tdmi
+#-mcpu=cortex-m0+ -mthumb
+
+CXX = clang++-3.9
+
+CXXFLAGS += -std=gnu++11
+CXXFLAGS += $(CFLAGS)
+
+sample: source cortex.bc
+source: source.cpp Makefile
+	$(CXX) $(CXXFLAGS) -o $@ $< && chmod +x $@
+	
+cortex.bc cortex.S: cortex.c Makefile
+	$(CC) $(CFLAGS) $(ARMFLAGS) -S -emit-llvm -o cortex.bc $<
+	$(CC) $(CFLAGS) $(ARMFLAGS) -S            -o cortex.S  $<
+
 QEMU_RELEASE = v2.5.0-pebble4
 .PHONY: qemu
 qemu: qemu/README
@@ -12,10 +31,10 @@ CBEFLAGS += -O=0
 
 target: target.c
 	gcc -I./llvm/projects/llvm-cbe/test/ -std=gnu89 -o $@ $< -lc 
-target.c: source.bc Makefile
+target.c: target.bc Makefile
 	$(CBE) $(CBEFLAGS) -o $@ $<
 #	$(LLC) -march=c -o $@ $<
-source.bc: source.cpp
+target.bc: source.cpp
 	clang++ -emit-llvm -c $< -o $@  
 
 .PHONY: doc
@@ -41,7 +60,7 @@ $(CBE): build
 build: llvm/projects/llvm-cbe/README.md
 	rm -rf llvm/build ; mkdir llvm/build
 	cd llvm/build ; \
-		CC=clang-3.9 CXX=clang++-3.9 cmake $(LLVM_CLANG) -G "Unix Makefiles" ..
+		CC=$(CC) CXX=$(CXX) cmake $(LLVM_CLANG) -G "Unix Makefiles" ..
 	cd llvm/build ; \
 		make 
 

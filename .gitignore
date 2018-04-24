@@ -4,9 +4,9 @@
 *.o
 *.bc
 
-src/
 llvm/
 installed/
 
 source
 cortex.S
+cortex.gcc.S

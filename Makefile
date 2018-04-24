@@ -41,6 +41,10 @@ target.bc: source.cpp
 doc:
 	doxygen doxy.gen
 	
+.PHONY: stm32
+stm32:
+	
+	
 .PHONY: install
 install: $(CBE)
 

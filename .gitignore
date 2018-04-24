@@ -2,6 +2,9 @@
 *.swp
 *.c
 *.o
+*.bc
 
 src/
 llvm/
+installed/
+

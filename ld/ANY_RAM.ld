@@ -6,14 +6,6 @@
 SECTIONS
 {
 
-	.isr_vector : {
-		. = ALIGN(4);
-		_sint = .;
-		KEEP( *(.isr_vector) )	/* interrupt vector table */
-		. = ALIGN(4);
-		_eint = .;
-	} > RAM
-	
 	.init : {					/* all init.code sections goes here */
 		. = ALIGN(4);
 		/* The standalone startup code

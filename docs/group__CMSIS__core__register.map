@@ -1,0 +1,9 @@
+<map id="Defines and Type Definitions" name="Defines and Type Definitions">
+<area shape="rect" id="node1" href="$group__CMSIS__CORE.html" title="Core Register type definitions. " alt="" coords="265,5,395,47"/>
+<area shape="rect" id="node2" href="$group__CMSIS__core__base.html" title="Definitions for base addresses, unions, and structures. " alt="" coords="272,71,388,98"/>
+<area shape="rect" id="node3" href="$group__CMSIS__SysTick.html" title="Type definitions for the System Timer Registers. " alt="" coords="261,123,399,164"/>
+<area shape="rect" id="node4" href="$group__CMSIS__NVIC.html" title="Type definitions for the NVIC Registers. " alt="" coords="244,188,416,229"/>
+<area shape="rect" id="node5" href="$group__CMSIS__SCB.html" title="Type definitions for the System Control Block Registers. " alt="" coords="255,253,405,295"/>
+<area shape="rect" id="node6" href="$group__CMSIS__CoreDebug.html" title="Cortex&#45;M0+ Core Debug Registers (DCB registers, SHCSR, and DFSR) are only accessible over DAP and not..." alt="" coords="254,319,406,360"/>
+<area shape="rect" id="node8" href="$group__CMSIS__core__bitfield.html" title="Macros for use with bit field definitions (xxx_Pos, xxx_Msk). " alt="" coords="259,384,401,425"/>
+</map>

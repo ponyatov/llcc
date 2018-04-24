@@ -1,0 +1,10 @@
+<map id="Stm32l073xx" name="Stm32l073xx">
+<area shape="rect" id="node1" href="$group__Peripheral__memory__map.html" title="Peripheral_memory_map" alt="" coords="265,5,432,32"/>
+<area shape="rect" id="node2" href="$group__Exported__constants.html" title="Exported_constants" alt="" coords="279,56,418,83"/>
+<area shape="rect" id="node3" href="$group__Exported__macros.html" title="Exported_macros" alt="" coords="287,107,411,133"/>
+<area shape="rect" id="node4" href="$group__CMSIS.html" title="CMSIS" alt="" coords="5,165,71,192"/>
+<area shape="rect" id="node6" href="$group__Peripheral__interrupt__number__definition.html" title="Peripheral_interrupt\l_number_definition" alt="" coords="281,158,416,199"/>
+<area shape="rect" id="node7" href="$group__Peripheral__registers__structures.html" title="Peripheral_registers\l_structures" alt="" coords="280,223,417,265"/>
+<area shape="rect" id="node8" href="$group__Configuration__section__for__CMSIS.html" title="Configuration_section\l_for_CMSIS" alt="" coords="275,289,423,330"/>
+<area shape="rect" id="node9" href="$group__Peripheral__declaration.html" title="Peripheral_declaration" alt="" coords="273,355,424,381"/>
+</map>

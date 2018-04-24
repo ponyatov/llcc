@@ -15,7 +15,7 @@ Reset_Handler:
 
 /* data copy flash->RAM skipped */
 
-/* zero .bss */
+/* zero .bss /
   movs	r1, #0			// fill word
   ldr	r2, = _sbss		// erase ptr
   ldr	r3, = _ebss
@@ -26,6 +26,7 @@ FillZerobss:
 LoopFillZerobss:
   cmp  r2, r3			// r2<r3
   bcc  FillZerobss
+*/
 
 /* Call the clock system intitialization function.*/
   bl  SystemInit
@@ -37,12 +38,6 @@ LoopFillZerobss:
 .global _exit
 _exit:
   	b _exit
-
-.global main
-main:
-.global _main
-_main:
-	b _exit
 
 .size  Reset_Handler, .-Reset_Handler
 

@@ -19,4 +19,3 @@ $(INC)/%.h: STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS/Include/%.h
 
 %.c: STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/%.c
 	cp $< $@
-

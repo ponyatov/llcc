@@ -1,0 +1,5 @@
+<map id="Functions and Instructions Reference" name="Functions and Instructions Reference">
+<area shape="rect" id="node2" href="$group__CMSIS__Core__NVICFunctions.html" title="Functions that manage interrupts and exceptions via the NVIC. " alt="" coords="247,5,363,32"/>
+<area shape="rect" id="node3" href="$group__CMSIS__Core__SysTickFunctions.html" title="Functions that configure the System. " alt="" coords="239,56,370,83"/>
+<area shape="rect" id="node4" href="$group__CMSIS__Core__RegAccFunctions.html" title="CMSIS Core Register\l Access Functions" alt="" coords="229,107,380,149"/>
+</map>

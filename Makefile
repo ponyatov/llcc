@@ -4,9 +4,12 @@ CBE  = $(PREFIX)/bin/llvm-cbe
 
 CC  = clang-3.9
 
-ARMFLAGS = -target arm-none-eabi -mcpu=cortex-m0 -mthumb -mfloat-abi=soft
+ARMFLAGS = -target arm-none-eabi -mcpu=cortex-m0 -mthumb -mfloat-abi=soft -g2
 #-mcpu=arm7tdmi
 #-mcpu=cortex-m0+ -mthumb
+
+# force compact sections LTO
+ARMFLAGS += -ffunction-sections -Wl,-gc-sections
 
 #CFLAGS += -Os
 #CFLAGS += -Ofast
@@ -17,6 +20,22 @@ CXX = clang++-3.9
 CXXFLAGS += -std=gnu++11
 CXXFLAGS += $(CFLAGS)
 
+OBJ = lib/startup_RAM.o demo.c
+demo.elf: $(OBJ) Makefile ld/QEMU_CortexM3_RAM.ld
+#	arm-none-eabi-gcc 
+	$(CC) $(ARMFLAGS) -Wl,-T,ld/QEMU_CortexM3_RAM.ld -o $@ \
+		$(OBJ) -Llib -lSTM32_RAM &&\
+	arm-none-eabi-objdump -x $@ > $@.objdump
+	
+	
+.PHONY: gdb
+gdb: demo.elf
+	ddd --debugger "arm-none-eabi-gdb -x ram.gdb $<"
+
+.PHONY: emu
+emu: demo.elf
+	qemu-system-arm -M lm3s811evb -cpu cortex-m3 -S -gdb tcp::4242  -kernel $<
+ 
 sample: source cortex.bc
 source: source.cpp Makefile
 	$(CXX) $(CXXFLAGS) -o $@ $< && chmod +x $@

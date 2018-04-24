@@ -1,6 +1,7 @@
 QEMU_RELEASE = v2.5.0-pebble4
 .PHONY: qemu
-qemu:
+qemu: qemu/README
+qemu/README:
 	git clone -o gh --depth=1 -b $(QEMU_RELEASE) https://github.com/pebble/qemu.git
 	cd qemu ; git checkout -b $(QEMU_RELEASE)
 
@@ -17,7 +18,10 @@ target.c: source.bc Makefile
 source.bc: source.cpp
 	clang++ -emit-llvm -c $< -o $@  
 
-
+.PHONY: doc
+doc:
+	doxygen doxy.gen
+	
 .PHONY: install
 install: $(CBE)
 
@@ -31,8 +35,9 @@ LLVM_CLANG += -DCMAKE_BUILD_TYPE=Release
 
 LLVM_CLANG += -DLLVM_TARGETS_TO_BUILD=ARM
 LLVM_CLANG += -DLLVM_TARGET_ARCH=ARM
-#LLVM_CLANG += -DLLVM_DEFAULT_TARGET_TRIPLE=arm-none-eabi
+LLVM_CLANG += -DLLVM_DEFAULT_TARGET_TRIPLE=arm-none-eabi
 
+$(CBE): build
 build: llvm/projects/llvm-cbe/README.md
 	rm -rf llvm/build ; mkdir llvm/build
 	cd llvm/build ; \

@@ -7,7 +7,7 @@ SECTIONS
 {
 
 	.init : {					/* all init.code sections goes here */
-		. = ALIGN(4);
+		. = ALIGN(8);
 		/* The standalone startup code
          * currently does not run these, better use the init arrays  */
 		KEEP(*(.init))
@@ -19,25 +19,27 @@ SECTIONS
 		KEEP(*(SORT(.init_array*)))
 		/* The fini code, i.e. an array of pointers to static destructors */
 		KEEP(*(SORT(.fini_array*)))
-		. = ALIGN(4);
+		. = ALIGN(8);
 	} > RAM
 	
 	.text : {
-		. = ALIGN(4);
+		. = ALIGN(8);
 		_stext = .;
 		*(.text*)				/* all program code */
+		*(.ctors)				/* C++ constructors */
+		*(.dtors)				/* C++ destructors */
 		*(.rodata*)				/* constants & data initializers */
-		KEEP(*(.eh_frame*))
+		KEEP(*(.eh_frame*))		/* C++ exceptions */
 		*(.jcr*)				/* ??? */
-		. = ALIGN(4);
+		. = ALIGN(8);
 		_etext = .;				/* end of code */
 	} > RAM
 	
 	.data : {
-		. = ALIGN(4);
+		. = ALIGN(8);
 		_sdata = .;
 		*(.data*)
-		. = ALIGN(4);
+		. = ALIGN(8);
 		_edata = .;
 	} > RAM
 	

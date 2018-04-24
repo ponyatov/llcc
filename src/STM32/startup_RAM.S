@@ -11,7 +11,7 @@
 Reset_Handler:
 	cpsid if			// disable interrupts on stack move
   ldr   r0, =_estack	/* set stack pointer */
-//  mov   sp, r0
+  mov   sp, r0
 
 /* data copy flash->RAM skipped */
 

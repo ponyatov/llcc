@@ -1,8 +1,16 @@
+PREFIX = $(CURDIR)/installed
+
+CBE  = $(PREFIX)/bin/llvm-cbe
+
 CC  = clang-3.9
 
-ARMFLAGS = -target arm-none-eabi -mcpu=cortex-m0 -mthumb 
+ARMFLAGS = -target arm-none-eabi -mcpu=cortex-m0 -mthumb -mfloat-abi=soft
 #-mcpu=arm7tdmi
 #-mcpu=cortex-m0+ -mthumb
+
+#CFLAGS += -Os
+#CFLAGS += -Ofast
+CFLAGS += -O1
 
 CXX = clang++-3.9
 
@@ -16,15 +24,7 @@ source: source.cpp Makefile
 cortex.bc cortex.S: cortex.c Makefile
 	$(CC) $(CFLAGS) $(ARMFLAGS) -S -emit-llvm -o cortex.bc $<
 	$(CC) $(CFLAGS) $(ARMFLAGS) -S            -o cortex.S  $<
-
-QEMU_RELEASE = v2.5.0-pebble4
-.PHONY: qemu
-qemu: qemu/README
-qemu/README:
-	git clone -o gh --depth=1 -b $(QEMU_RELEASE) https://github.com/pebble/qemu.git
-	cd qemu ; git checkout -b $(QEMU_RELEASE)
-
-CBE = ./installed/bin/llvm-cbe
+	arm-none-eabi-gcc $(CFLAGS) -mcpu=cortex-m0 -mthumb -S -o cortex.gcc.S  $<
 
 CBEFLAGS += -march=arm
 CBEFLAGS += -O=0
@@ -47,7 +47,7 @@ install: $(CBE)
 LLVM_SRC	= llvm-3.9.1.src
 LLVM_GZ		= $(LLVM_SRC).tar.xz
 
-LLVM_CLANG += -DCMAKE_INSTALL_PREFIX=$(CURDIR)/installed
+LLVM_CLANG += -DCMAKE_INSTALL_PREFIX=$(PREFIX)
 LLVM_CLANG += -DCMAKE_BUILD_TYPE=Release
 #LLVM_CLANG += -DCMAKE_C_FLAGS="-O0"
 #LLVM_CLANG += -DCMAKE_CXX_FLAGS="-O0"
@@ -60,9 +60,9 @@ $(CBE): build
 build: llvm/projects/llvm-cbe/README.md
 	rm -rf llvm/build ; mkdir llvm/build
 	cd llvm/build ; \
-		CC=$(CC) CXX=$(CXX) cmake $(LLVM_CLANG) -G "Unix Makefiles" ..
+		CC=gcc CXX=g++ cmake $(LLVM_CLANG) -G "Unix Makefiles" ..
 	cd llvm/build ; \
-		make 
+		make && make install
 
 llvm/projects/llvm-cbe/README.md: llvm/README.txt
 	cd llvm/projects ; git clone --depth=1 https://github.com/gapkalov/llvm-cbe.git 

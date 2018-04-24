@@ -3,7 +3,7 @@
 ### cpp -> llvm -> ansi C transpiler
 
 - LLVM 3.9 (co-system with Debian GNU/Linux prepackaged `clang-3.9`)
-- `qemu-pebble` (STM32 enabled)
+- `qemu-system-arm` (Debian GNU/Linux prepackaged)
 - uses Julia llvm-cbe backend fork & LLVM 3.9:
 
 ```
